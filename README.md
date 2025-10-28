@@ -47,6 +47,107 @@ sudo systemctl status postgresql
 - Connect via pgAdmin with usernamer = macusername and blank password
 - create new user => `postgres` and password =  `password`
 
+### Create Database
+
+Create a new database named `ocpi_emsp`:
+
+```bash
+# Using psql command line
+psql -U postgres -c "CREATE DATABASE ocpi_emsp;"
+```
+
+Or use pgAdmin to create the database with the GUI.
+
+### Python Environment Setup
+
+1. **Create a virtual environment:**
+
+```bash
+python -m venv venv
+```
+
+2. **Activate the virtual environment:**
+
+macOS/Linux:
+```bash
+source venv/bin/activate
+```
+
+Windows:
+```bash
+venv\Scripts\activate
+```
+
+3. **Install dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
+
+4. **Configure environment variables:**
+
+Copy the `.env.example` file to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+The default configuration is already set for local development with:
+- Username: `postgres`
+- Password: `password`
+- Database: `ocpi_emsp`
+
+5. **Run database migrations:**
+
+```bash
+alembic upgrade head
+```
+
+### Running the Application
+
+Start the development server:
+
+```bash
+python main.py
+```
+
+Or using uvicorn directly:
+
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+The API will be available at:
+- **API**: http://localhost:8000
+- **Interactive API docs (Swagger)**: http://localhost:8000/docs
+- **Alternative API docs (ReDoc)**: http://localhost:8000/redoc
+
+## Project Structure
+
+```
+OCPI-2.3-EMSP/
+├── core/                   # Core application logic
+│   ├── __init__.py
+│   ├── config.py          # Application settings
+│   └── database.py        # Database connection and session management
+├── versions/              # OCPI version implementations
+│   └── __init__.py
+├── alembic/               # Database migrations
+│   ├── versions/          # Migration scripts
+│   └── env.py            # Alembic environment configuration
+├── tests/                 # Test files
+├── main.py               # Application entry point
+├── requirements.txt      # Python dependencies
+├── alembic.ini          # Alembic configuration
+└── .env                 # Environment variables (not in git)
+```
+
+## Contributing
+
+```
+- Connect via pgAdmin with usernamer = macusername and blank password
+- create new user => `postgres` and password =  `password`
+
 
 
 ## Contributing
