@@ -14,12 +14,13 @@ NC='\033[0m' # No Color
 # Database credentials
 DB_USER="postgres"
 DB_PASSWORD="password"
-DB_NAME="ocpi_emsp"
+DB_NAME="OCPI"
 DB_HOST="localhost"
 DB_PORT="5432"
 
 echo "This script will create the database for OCPI eMSP Server"
 echo "Database: $DB_NAME"
+echo "Schema: OCPI_2_3"
 echo "User: $DB_USER"
 echo ""
 

@@ -12,7 +12,8 @@ class Settings(BaseSettings):
     debug: bool = True
     
     # Database
-    database_url: str = "postgresql+asyncpg://postgres:password@localhost:5432/ocpi_emsp"
+    database_url: str = "postgresql+asyncpg://postgres:password@localhost:5432/OCPI"
+    db_schema: str = "OCPI_2_3"
     db_pool_size: int = 20
     db_max_overflow: int = 10
     db_pool_timeout: int = 30

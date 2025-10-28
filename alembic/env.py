@@ -12,6 +12,9 @@ from alembic import context
 from core.database import Base
 from core.config import get_settings
 
+# Import all models here so Alembic can detect them for autogenerate
+import models  # noqa: F401
+
 # this is the Alembic Config object
 config = context.config
 
@@ -19,7 +22,8 @@ config = context.config
 settings = get_settings()
 
 # Override sqlalchemy.url with the one from settings
-config.set_main_option("sqlalchemy.url", settings.database_url)
+# Don't set it in config to avoid interpolation issues
+# config.set_main_option("sqlalchemy.url", settings.database_url)
 
 # Interpret the config file for Python logging.
 if config.config_file_name is not None:
@@ -54,21 +58,32 @@ def run_migrations_offline() -> None:
 
 def do_run_migrations(connection: Connection) -> None:
     """Run migrations with the given connection."""
-    context.configure(connection=connection, target_metadata=target_metadata)
+    context.configure(
+        connection=connection,
+        target_metadata=target_metadata,
+        version_table_schema=settings.db_schema,  # Put alembic_version in our schema
+        include_schemas=True,
+    )
 
     with context.begin_transaction():
+        # Create schema if it doesn't exist
+        context.execute(f"CREATE SCHEMA IF NOT EXISTS {settings.db_schema}")
         context.run_migrations()
 
 
 async def run_async_migrations() -> None:
     """Run migrations in 'online' mode with async support."""
     configuration = config.get_section(config.config_ini_section)
+    # Use the database URL from settings, not from alembic.ini
     configuration["sqlalchemy.url"] = settings.database_url
     
     connectable = async_engine_from_config(
         configuration,
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
+        connect_args={
+            "server_settings": {"search_path": settings.db_schema}
+        }
     )
 
     async with connectable.connect() as connection:

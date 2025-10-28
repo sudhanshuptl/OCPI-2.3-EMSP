@@ -63,6 +63,11 @@ async def health_check():
     return {"status": "healthy"}
 
 
+# Include test router for database verification
+from api.test_router import router as test_router
+app.include_router(test_router, prefix="/api")
+
+
 # TODO: Include routers for OCPI modules here
 # Example:
 # from versions.v2_3.locations.api import router as locations_router
