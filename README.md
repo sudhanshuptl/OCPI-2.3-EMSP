@@ -121,6 +121,24 @@ The API will be available at:
 - **API**: http://localhost:8000
 - **Interactive API docs (Swagger)**: http://localhost:8000/docs
 - **Alternative API docs (ReDoc)**: http://localhost:8000/redoc
+- **OCPI Versions**: http://localhost:8000/ocpi/emsp/versions
+
+## OCPI Implementation Status
+
+### ✅ Implemented Modules
+
+- **Versions** (`/ocpi/emsp/versions`) - Lists available OCPI versions and endpoints
+
+### 🚧 Planned Modules
+
+- **Credentials** - Authentication and registration
+- **Locations** - Charge point location data
+- **Sessions** - Charging session information  
+- **CDRs** - Charge Detail Records
+- **Tariffs** - Pricing information
+- **Tokens** - Authorization tokens
+- **Commands** - Remote commands (START_SESSION, STOP_SESSION, etc.)
+- **Charging Profiles** - Smart charging profiles
 
 ## Project Structure
 

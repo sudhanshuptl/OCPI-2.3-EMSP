@@ -67,6 +67,10 @@ async def health_check():
 from api.test_router import router as test_router
 app.include_router(test_router, prefix="/api")
 
+# Include OCPI versions router
+from versions.v2_3.api import router as versions_router
+app.include_router(versions_router)
+
 
 # TODO: Include routers for OCPI modules here
 # Example:
